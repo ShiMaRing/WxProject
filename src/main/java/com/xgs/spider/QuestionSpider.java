@@ -25,13 +25,13 @@ import org.apache.http.impl.client.BasicCookieStore;
 
 public class QuestionSpider {
 
-  private static final int MAX = 3;
+  private static final int MAX = 5;
   HttpConfig config;
   HttpClientContext context = new HttpClientContext();
   CookieStore cookieStore = new BasicCookieStore();
 
   /*  传入问题以及页数以及页面大小*/
-  List<Answer> getAnswer(String question) throws HttpProcessException {
+  List<Answer> getAnswer(String question,int size) throws HttpProcessException {
 
     List<Answer> results = new ArrayList<>();
     context.setCookieStore(cookieStore);
@@ -63,7 +63,7 @@ public class QuestionSpider {
         if (answer.getAskContent().contains(question)) {
           results.add(answer);
         }
-        if (results.size() >= 10) {
+        if (results.size() >= size) {
           return results;
         }
       }
@@ -74,7 +74,7 @@ public class QuestionSpider {
   public static void main(String[] args) {
 
     try {
-      List<Answer> results = new QuestionSpider().getAnswer("玉米");
+      List<Answer> results = new QuestionSpider().getAnswer("玉米",10);
 
       for (Answer result : results) {
         System.out.println(result.getAskContent());
