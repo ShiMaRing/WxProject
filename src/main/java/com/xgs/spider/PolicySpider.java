@@ -84,6 +84,7 @@ public class PolicySpider {
     for (Object object : objects) {
       Article article = new Article();
       JSONObject ob = JSON.parseObject(object.toString());
+      article.setType(category);
       article.setCreateTime(ob.getString("createTime"));
       article.setDescribe(ob.getString("description"));
       article.setId(ob.getString("id"));

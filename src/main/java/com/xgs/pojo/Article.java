@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class Article {
+
+  String type;
   String createTime;//文章创建时间
   String id;//文章id
   String ovtitle;//存储标题
