@@ -18,11 +18,13 @@ import org.apache.http.Header;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.springframework.stereotype.Component;
 
 /**
  * @author xgs 问答爬虫，根据提问返回对应的列表
  */
 
+@Component
 public class QuestionSpider {
 
   private static final int MAX = 5;
