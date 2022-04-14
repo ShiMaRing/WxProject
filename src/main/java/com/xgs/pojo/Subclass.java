@@ -15,10 +15,8 @@ import org.springframework.stereotype.Repository;
 @Data
 public class Subclass {
 
-  @TableField("subclass_name")
-  String name;
-  @TableField("general_name")
-  String generalName;
+  @TableField("subclassName")
+  String subclassName;
   @TableField("general_pid")
   String generalPid;
 

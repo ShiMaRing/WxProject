@@ -1,4 +1,5 @@
 package com.xgs.spider;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -6,7 +7,9 @@ import com.arronlong.httpclientutil.HttpClientUtil;
 import com.arronlong.httpclientutil.common.HttpConfig;
 import com.arronlong.httpclientutil.common.HttpHeader;
 import com.arronlong.httpclientutil.exception.HttpProcessException;
+import com.xgs.dao.SubclassDao;
 import com.xgs.pojo.General;
+import com.xgs.pojo.Price;
 import com.xgs.pojo.Province;
 import com.xgs.pojo.Subclass;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import org.apache.http.Header;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +32,18 @@ public class DataSpider {
 
   CookieStore cookieStore = new BasicCookieStore();
   HttpClientContext context;
+
+  static Map<Integer, String> map;
+  @Autowired
+  SubclassDao subclassDao;
+
+  static {
+    map = new HashMap<>();
+    map.put(1, "近7日");
+    map.put(2, "近一月");
+    map.put(3, "近半年");
+    map.put(4, "近一年");
+  }
 
   public DataSpider() {
     context = new HttpClientContext();
@@ -112,14 +128,20 @@ public class DataSpider {
       for (Object object : objects) {
         Subclass subclass = new Subclass();
         JSONObject jsonObject = JSON.parseObject(object.toString());
-        subclass.setName(jsonObject.getString("varietyName"));
+        subclass.setSubclassName(jsonObject.getString("varietyName"));
         subclass.setGeneralPid(pid);
-        subclass.setGeneralName(jsonObject.getString("varietyName"));
         subclasses.add(subclass);
       }
     }
     //解析res，返回对应的list
     return subclasses;
+  }
+
+  public List<Price> getPrices(String name) {
+
+
+
+    return null;
   }
 
 
