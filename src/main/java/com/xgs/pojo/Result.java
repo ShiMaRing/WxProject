@@ -11,4 +11,5 @@ public class Result {
   int statusCode;
   Object data;
   String desc;
+
 }

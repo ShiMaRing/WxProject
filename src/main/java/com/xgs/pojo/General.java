@@ -16,4 +16,20 @@ public class General {
   String generalName;
   @TableField("pid")
   String pid;
+
+  public String getGeneralName() {
+    return generalName;
+  }
+
+  public void setGeneralName(String generalName) {
+    this.generalName = generalName;
+  }
+
+  public String getPid() {
+    return pid;
+  }
+
+  public void setPid(String pid) {
+    this.pid = pid;
+  }
 }

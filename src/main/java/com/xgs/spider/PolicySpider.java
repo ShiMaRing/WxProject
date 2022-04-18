@@ -51,6 +51,7 @@ public class PolicySpider {
     try {
       String html = HttpClientUtil.get(config);
 
+
       Document doc = Jsoup.parse(html);
       Element article_main = doc.getElementById("article_main");
       Elements ps = article_main.getElementsByTag("p");
@@ -62,7 +63,7 @@ public class PolicySpider {
         }
         stringBuilder.append(s);
       }
-    } catch (HttpProcessException e) {
+    } catch (HttpProcessException  e) {
       e.printStackTrace();
     }
     return stringBuilder.toString();
@@ -71,7 +72,7 @@ public class PolicySpider {
   /**
    * 参数 category：分类 page：指定页数
    */
-  List<Article> getArticles(String category, int page) throws HttpProcessException {
+  public List<Article> getArticles(String category, int page) throws HttpProcessException {
 
     List<Article> list = new ArrayList<>();
     String suffixp = "NewsList_";
@@ -103,7 +104,12 @@ public class PolicySpider {
   public static void main(String[] args) {
 
     try {
-      List<Article> fx = new PolicySpider().getArticles("zc", 0);
+      List<Article> fx = new PolicySpider().getArticles("fx", 0);
+      for (Article article : fx) {
+
+        System.out.println(article.getUrl());
+        System.out.println(article.getContent().length());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
