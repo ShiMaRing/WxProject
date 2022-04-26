@@ -17,7 +17,6 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,25 +47,19 @@ public class PolicySpider {
     config = HttpConfig.custom().url(url);
 
     StringBuilder stringBuilder = new StringBuilder();
+
+    String html = null;
     try {
-      String html = HttpClientUtil.get(config);
-
-
+      html = HttpClientUtil.get(config);
       Document doc = Jsoup.parse(html);
       Element article_main = doc.getElementById("article_main");
-      Elements ps = article_main.getElementsByTag("p");
-      for (Element p : ps) {
-        String s = "";
-        Elements span = p.getElementsByTag("span");
-        for (Element element : span) {
-          s += element.text();
-        }
-        stringBuilder.append(s);
-      }
-    } catch (HttpProcessException  e) {
+      stringBuilder.append(article_main.html());
+    } catch (HttpProcessException e) {
       e.printStackTrace();
     }
+
     return stringBuilder.toString();
+
   }
 
   /**
@@ -105,11 +98,12 @@ public class PolicySpider {
 
     try {
       List<Article> fx = new PolicySpider().getArticles("fx", 0);
-      for (Article article : fx) {
-
-        System.out.println(article.getType());
-
-      }
+//      for (Article article : fx) {
+//        System.out.println(article.getUrl());
+//        System.out.println(article.getContent().length());
+//      }
+      String content = fx.get(0).getContent();
+      System.out.println(content);
     } catch (Exception e) {
       e.printStackTrace();
     }

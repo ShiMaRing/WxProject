@@ -1,5 +1,4 @@
 package com.xgs.spider;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -137,9 +136,10 @@ public class DataSpider {
     return subclasses;
   }
 
-  public List<Price> getPrices(String name) {
+  //爬取三要素：名字，种类顺序
+  public List<Price> getPrices(Subclass subclass) {
 
-
+    HttpConfig config = getConfig();
 
     return null;
   }
