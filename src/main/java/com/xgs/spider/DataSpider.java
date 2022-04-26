@@ -1,4 +1,5 @@
 package com.xgs.spider;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -8,7 +9,7 @@ import com.arronlong.httpclientutil.common.HttpHeader;
 import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.xgs.dao.SubclassDao;
 import com.xgs.pojo.General;
-import com.xgs.pojo.Price;
+import com.xgs.pojo.GraphData;
 import com.xgs.pojo.Province;
 import com.xgs.pojo.Subclass;
 import java.util.ArrayList;
@@ -136,21 +137,95 @@ public class DataSpider {
     return subclasses;
   }
 
-  //爬取三要素：名字，种类顺序
-  public List<Price> getPrices(Subclass subclass) {
-
+  //获取省份的价格
+  public GraphData getProvincePrice(String name, String provinceId, String type) {
     HttpConfig config = getConfig();
-
-    return null;
-  }
-
-
-  public static void main(String[] args) {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(
+        "http://pfsc.agri.cn/api/marketQuotationController/getSingleVarietiesProvince?");
+    stringBuilder.append("name=").append(name).append("&cycle=").append(type)
+        .append("&provinceCode=").append(provinceId).append("&order=ASC");
+    Map<String, Object> map = new HashMap<>();
+    map.put("name", name);
+    map.put("cycle", type);
+    map.put("order", "ASC");
+    map.put("provinceCode", provinceId);
+    String url = stringBuilder.toString();
+    config.url(url).map(map);
+    String result = null;
     try {
-      List<Subclass> al = new DataSpider().getSubclass("AL");
-      System.out.println(al);
+      result = HttpClientUtil.post(config);
     } catch (HttpProcessException e) {
       e.printStackTrace();
     }
+    //拿到了对应的json数据，进行解析封装返回，解析方法应该是通用的
+    return parse(result);
+
+  }
+
+  //获取全国的统一价格
+  public GraphData getCountryPrice(String name, String type) {
+    HttpConfig config = getConfig();
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(
+        "http://pfsc.agri.cn/api/marketQuotationController/getSingleVarietiesCountry?");
+    stringBuilder.append("name=").append(name).append("&cycle=").append(type).append("&order=ASC");
+    Map<String, Object> map = new HashMap<>();
+    map.put("name", name);
+    map.put("cycle", type);
+    map.put("order", "ASC");
+    String url = stringBuilder.toString();
+    config.url(url).map(map);
+    String result = null;
+    try {
+      result = HttpClientUtil.post(config);
+    } catch (HttpProcessException e) {
+      e.printStackTrace();
+    }
+    //拿到了对应的json数据，进行解析封装返回，解析方法应该是通用的
+    return parse(result);
+  }
+
+  public GraphData parse(String result) {
+    //传入字符串进行解析
+    GraphData graphData = new GraphData();
+
+    JSONObject res = JSON.parseObject(result);
+    String content = res.getString("content");
+    JSONObject jsonObject = JSON.parseObject(content);
+    JSONArray prices = jsonObject.getJSONArray("price");
+
+    if (prices.size() == 0) {
+      graphData.setBlank(true);
+      return graphData;
+    } else {
+      graphData.setBlank(false);
+    }
+
+    Object min = prices.get(0);
+    Map<String, String> minMap = JSON.parseObject(min.toString(), Map.class);
+    graphData.setMinPrice(minMap.get("middlePrice"));
+    graphData.setMinPlace(minMap.get("marketName"));
+    graphData.setMinTime(minMap.get("reportTime"));
+
+    Object max = prices.get(1);
+    Map<String, String> maxMap = JSON.parseObject(max.toString(), Map.class);
+    graphData.setMaxPrice(maxMap.get("middlePrice"));
+    graphData.setMaxPlace(maxMap.get("marketName"));
+    graphData.setMaxTime(maxMap.get("reportTime"));
+
+    String[] x = jsonObject.getObject("x", String[].class);
+    double[] y = jsonObject.getObject("y", double[].class);
+
+    String timeRange = x[0] + "--" + x[x.length - 1];
+    graphData.setTimeRange(timeRange);
+
+    graphData.setX(x);
+    graphData.setY(y);
+    return graphData;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(new DataSpider().getProvincePrice("猪肉(白条猪)","110000","近一年"));
   }
 }

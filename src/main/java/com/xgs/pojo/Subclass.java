@@ -20,6 +20,17 @@ public class Subclass {
   @TableField("general_pid")
   String generalPid;
 
+  public String getSubclassName() {
+    return subclassName;
+  }
+
+  public void setSubclassName(String subclassName) {
+    this.subclassName = subclassName;
+  }
+
+  public String getGeneralPid() {
+    return generalPid;
+  }
 
   public void setGeneralPid(String generalPid) {
     this.generalPid = generalPid;
