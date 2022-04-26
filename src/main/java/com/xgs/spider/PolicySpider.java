@@ -107,8 +107,8 @@ public class PolicySpider {
       List<Article> fx = new PolicySpider().getArticles("fx", 0);
       for (Article article : fx) {
 
-        System.out.println(article.getUrl());
-        System.out.println(article.getContent().length());
+        System.out.println(article.getType());
+
       }
     } catch (Exception e) {
       e.printStackTrace();

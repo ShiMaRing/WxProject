@@ -5,6 +5,7 @@ import com.xgs.dao.BaseDao;
 import com.xgs.pojo.Article;
 import com.xgs.spider.PolicySpider;
 import org.apache.commons.dbutils.QueryRunner;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

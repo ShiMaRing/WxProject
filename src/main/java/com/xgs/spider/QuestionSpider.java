@@ -76,7 +76,7 @@ public class QuestionSpider {
   public static void main(String[] args) {
 
     try {
-      List<Answer> results = new QuestionSpider().getAnswer("玉米",10);
+      List<Answer> results = new QuestionSpider().getAnswer("玉米",20);
 
       for (Answer result : results) {
         System.out.println(result.getAskContent());
