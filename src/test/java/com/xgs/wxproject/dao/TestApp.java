@@ -4,7 +4,10 @@ import com.arronlong.httpclientutil.exception.HttpProcessException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgs.dao.GeneralDao;
 import com.xgs.dao.ProvinceDao;
+import com.xgs.dao.SubclassDao;
 import com.xgs.pojo.General;
+import com.xgs.pojo.Subclass;
+import com.xgs.service.SubclassService;
 import com.xgs.spider.DataSpider;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -20,6 +23,12 @@ public class TestApp {
   DataSpider dataSpider;
   @Autowired
   GeneralDao generalDao;
+
+  @Autowired
+  SubclassDao subclassDao;
+  @Autowired
+  SubclassService subclassService;
+
   @Test
   void add(){
     try {
@@ -35,11 +44,7 @@ public class TestApp {
 
   @Test
   void selectTest(){
-
-    List<General> generals = generalDao.findAll();
-    for (General name : generals) {
-      System.out.println(name);
-    }
-
+    List<Subclass> aa = subclassDao.findByPid("AA");
+    System.out.println(aa);
   }
 }
