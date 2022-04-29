@@ -53,7 +53,7 @@ public class DataSpider {
   /**
    * 该方法提取所有省份名称以及id
    */
-  HttpConfig getConfig() {
+  public HttpConfig getConfig() {
     String host = "pfsc.agri.cn";
     String origin = "http://pfsc.agri.cn";
     String referer = "http://pfsc.agri.cn/";
