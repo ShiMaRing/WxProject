@@ -11,6 +11,10 @@
     VALUES (#{typename}, #{url}, #{name})
   </insert>
 
+  <select id="getIdByName" parameterType="String" resultType="Integer" >
+    select type_id from wikiType
+    where type_name=#{typename}
+  </select>
 
 </mapper>
 

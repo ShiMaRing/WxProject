@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--该接口提供写入操作所有的列表并提供查询所有索引的方法
+-->
+<mapper namespace="com.xgs.dao.wikidao.WikiDao">
+
+  <insert id="insertWiki" parameterType="java.util.List">
+    insert into wiki (title, blank, `desc`, content, img, url, type_id)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      (#{item.title},#{item.blank},#{item.desc},#{item.content},#{item.img}
+      ,#{item.url},#{item.typeId})
+    </foreach>
+  </insert>
+
+
+</mapper>
+

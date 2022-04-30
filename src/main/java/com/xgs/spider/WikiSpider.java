@@ -45,7 +45,7 @@ public class WikiSpider {
   /**
    * 该方法用来返回标题title
    */
- public List<WikiIndex> getIndex() {
+  public List<WikiIndex> getIndex() {
     String base = "http://www.nongyie.com";
     List<WikiIndex> wikiIndices = new ArrayList<>();
     String url = "http://www.nongyie.com/templets/nybk/yfiles/sitemap.html";
@@ -84,9 +84,10 @@ public class WikiSpider {
   /**
    * 需要分三步爬取，第一步获取全部的个数并且获取所有页面的url 第二部进入具体列表页面，判断是否到达最大爬取次数，没有到达就爬取具体内容，达到了就只获取标题以及url
    */
-  int max = 30;//每个类别最多爬取50条带具体信息的
+  int max;//每个类别最多爬取50条带具体信息的
 
-  public  void getBaseInfo(String url) {
+  public List<Wiki> getBaseInfo(String url) {
+    max = 50;
     List<String> nextUrls = new ArrayList<>();
     httpConfig.url(url);
     String html = "";
@@ -104,22 +105,35 @@ public class WikiSpider {
     max = Math.min(max, allCount);//获取需要具体属性的最大文章数量
     //首先获取所有的文章列表路径url
     //判断列表集合是否为空，为空则说明没有存储列表，否则需要添加
-    Element urlList = document.getElementsByAttributeValue("name", "sldd").get(0);
-    Elements options = urlList.getElementsByTag("option");
-    for (Element option : options) {
-      String nextUrl = url + option.attr("value");
-      nextUrls.add(nextUrl);
+
+    Elements urlList = document.getElementsByAttributeValue("name", "sldd");
+
+    Elements options;
+    //如果找不到的话，说明只有单页，此时需要另外找方法获取
+    if (urlList == null || urlList.size() == 0) {
+      //直接把当前主页当作url也行
+      nextUrls.add(url);
+    } else {
+      //有多条可以多条提取
+      options = urlList.get(0).getElementsByTag("option");
+      for (Element option : options) {
+        String nextUrl = url + option.attr("value");
+        nextUrls.add(nextUrl);
+      }
     }
+    List<Wiki> wikis = new ArrayList<>();
+
     //接下来读取各个nexturl并进行列表查询
     for (String nextUrl : nextUrls) {
       try {
         //获取wikis,需要调用dao将其进行存储
-        List<Wiki> wikis = parseList(nextUrl);
-        break;
+        wikis.addAll(parseList(nextUrl));
       } catch (HttpProcessException e) {
         e.printStackTrace();
       }
     }
+
+    return wikis;
   }
 
   public List<Wiki> parseList(String url) throws HttpProcessException {
@@ -129,16 +143,23 @@ public class WikiSpider {
     //获取列表页面，根据是否需要爬取来判断
     String html = HttpClientUtil.get(httpConfig);
     Document document = Jsoup.parse(html);
-    Elements lis = document.getElementsByClass("middle").get(0).getElementsByTag("ul").get(0).getElementsByTag("li");
+    Elements lis = document.getElementsByClass("middle").get(0).getElementsByTag("ul").get(0)
+        .getElementsByTag("li");
     //拿到所有的li,解析里面的元素
     for (Element li : lis) {
+      boolean flag = true;
       Wiki wiki;
       String articleUrl = base + li.getElementsByTag("a").get(0).attr("href");
       String title = li.text();
-      if (max >= 0) {
+      if (max > 0) {
         //说明需要爬取具体内容
-        wiki = parse(articleUrl);
-        wiki.setBlank(false);
+        try {
+          wiki = parse(articleUrl);
+        } catch (IndexOutOfBoundsException exception) {
+          wiki = new Wiki();
+          max++;
+          flag = false;
+        }
         max--;
       } else {
         //反之只返回url以及title
@@ -147,9 +168,11 @@ public class WikiSpider {
       }
       wiki.setTitle(title);
       wiki.setUrl(articleUrl);
-      wikis.add(wiki);
-      System.out.println(wiki);
+      if (flag) {
+        wikis.add(wiki);
+      }
     }
+    System.out.println(wikis);
     return wikis;
   }
 
@@ -171,8 +194,9 @@ public class WikiSpider {
     wiki.setDesc(desc);
     stringBuilder.append(boxbody.html());
     Elements img = boxbody.getElementsByTag("img");
-    if(img!=null&&img.size()!=0)
-        wiki.setImg(img.get(0).attr("src"));
+    if (img != null && img.size() != 0) {
+      wiki.setImg(img.get(0).attr("src"));
+    }
     Element dede_page = document.getElementsByClass("dede_pages").get(0);
     Elements lis = dede_page.getElementsByTag("li");
 

@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @TableName("wiki")
 public class Wiki {
+  int typeId;
   //文章标题
   String title;
   //内容是否为空

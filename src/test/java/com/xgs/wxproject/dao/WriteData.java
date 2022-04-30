@@ -18,6 +18,12 @@ public class WriteData {
     System.out.println(count);
   }
 
+  @Test
+  public  void writeWiki(){
+    int count = dataWriter.writeWikis();
+    System.out.println(count);
+  }
+
 
 
 }

@@ -13,5 +13,5 @@ interface WikiIndexDao {
 
   int insertIndex(@Param("typename") String typename,@Param("url") String url,@Param("name") String name);
 
-  List<WikiIndex> findAll();
+  int getIdByName(@Param("typename") String typename);
 }
