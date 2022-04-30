@@ -7,7 +7,7 @@ import com.arronlong.httpclientutil.HttpClientUtil;
 import com.arronlong.httpclientutil.common.HttpConfig;
 import com.arronlong.httpclientutil.common.HttpHeader;
 import com.arronlong.httpclientutil.exception.HttpProcessException;
-import com.xgs.dao.SubclassDao;
+import com.xgs.dao.dataDao.SubclassDao;
 import com.xgs.pojo.General;
 import com.xgs.pojo.GraphData;
 import com.xgs.pojo.Province;

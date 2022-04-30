@@ -1,4 +1,4 @@
-package com.xgs.dao;
+package com.xgs.dao.dataDao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xgs.pojo.General;

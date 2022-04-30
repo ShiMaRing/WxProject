@@ -1,4 +1,4 @@
-package com.xgs.dao;
+package com.xgs.dao.dataDao;
 
 import com.xgs.pojo.Province;
 import java.util.List;

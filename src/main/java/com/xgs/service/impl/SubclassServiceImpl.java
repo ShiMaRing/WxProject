@@ -1,8 +1,8 @@
 package com.xgs.service.impl;
 
 import com.arronlong.httpclientutil.exception.HttpProcessException;
-import com.xgs.dao.GeneralDao;
-import com.xgs.dao.SubclassDao;
+import com.xgs.dao.dataDao.GeneralDao;
+import com.xgs.dao.dataDao.SubclassDao;
 import com.xgs.pojo.General;
 import com.xgs.pojo.Subclass;
 import com.xgs.service.SubclassService;
