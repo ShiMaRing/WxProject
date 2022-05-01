@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProvinceDao {
 
-  int getId(String name);
+  String getId(String name);
 
   String getNameById(int id);
 
