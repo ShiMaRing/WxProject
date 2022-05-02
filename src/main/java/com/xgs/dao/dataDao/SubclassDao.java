@@ -19,8 +19,7 @@ public interface SubclassDao extends BaseMapper<Subclass> {
   @Select("select subclass_name,general_pid from subclass where general_pid=#{pid}")
   List<Subclass> findByPid(String pid);
 
-  @Select("select subclass_name,general_pid from subclass where general_pid="
-      + "(select general_pid from general where general_name=#{name})")
+  @Select("select subclass_name,general_pid from subclass where general_pid=(select pid from general where general_name=#{name})")
   List<Subclass> findByName(String name);
 
   @Delete("delete from subclass where subclass_name=#{name}")

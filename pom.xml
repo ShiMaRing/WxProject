@@ -14,10 +14,24 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>WxProject</name>
   <description>WxProject</description>
+
   <properties>
     <java.version>1.8</java.version>
   </properties>
   <dependencies>
+
+    <dependency>
+      <groupId>commons-dbutils</groupId>
+      <artifactId>commons-dbutils</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mchange</groupId>
+      <artifactId>c3p0</artifactId>
+      <version>0.9.5.2</version>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -79,12 +93,20 @@
       <version>1.16.20</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.10</version>
+    </dependency>
+
+
   </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.6.6</version>
       </plugin>
     </plugins>
   </build>
