@@ -229,5 +229,8 @@ public class WikiSpider {
     WikiSpider wIkiSpider = new WikiSpider();
     List<WikiIndex> index = wIkiSpider.getIndex();
     wIkiSpider.getBaseInfo("http://www.nongyie.com/zxuqinyang/");
+    for(WikiIndex wikiIndex:index){
+      System.out.println(wikiIndex.getMap());
+    }
   }
 }

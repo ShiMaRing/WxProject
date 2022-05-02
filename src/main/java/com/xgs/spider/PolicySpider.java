@@ -98,12 +98,12 @@ public class PolicySpider {
 
     try {
       List<Article> fx = new PolicySpider().getArticles("fx", 0);
-//      for (Article article : fx) {
-//        System.out.println(article.getUrl());
-//        System.out.println(article.getContent().length());
-//      }
-      String content = fx.get(0).getContent();
-      System.out.println(content);
+      for (Article article : fx) {
+        System.out.println(article.getUrl());
+        System.out.println(article.getContent().length());
+      }
+//      String content = fx.get(0).getContent();
+//      System.out.println(content);
     } catch (Exception e) {
       e.printStackTrace();
     }

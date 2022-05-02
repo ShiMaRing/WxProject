@@ -1,8 +1,10 @@
 package com.xgs.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
+@TableName("article")
 public class Article {
   String createTime;//文章创建时间
   String id;//文章id

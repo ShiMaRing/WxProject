@@ -80,6 +80,4 @@ public class WikiController {
     }
     return result;
   }
-
-
 }

@@ -27,7 +27,7 @@ public class ArticleServieceImp extends BaseDao {
         QueryRunner queryRunner = new QueryRunner();
         Connection connection = getConnection();
 
-        String sql ="insert into article(id,create_time,ovtitle,url,source,thumb_image,content,`describe`)values(?,?,?,?,?,?,?,?)";
+        String sql ="insert into article(id,type,create_time,ovtitle,url,source,thumb_image,content,`describe`)values(?,?,?,?,?,?,?,?,?)";
         //静态设置导入的页数
         int numOfPage = 5;
 
@@ -50,7 +50,7 @@ public class ArticleServieceImp extends BaseDao {
                     if(set.contains(integer)) continue;
                     set.add(Integer.parseInt(article.getId()));
                     count =  queryRunner.update(connection,sql,
-                            article.getId(),article.getCreateTime(),
+                            article.getId(),article.getType(),article.getCreateTime(),
                             article.getOvtitle(), article.getUrl(),article.getSource(),
                             article.getThumbImage(),article.getContent(),article.getDescribe());
                 }
@@ -58,10 +58,6 @@ public class ArticleServieceImp extends BaseDao {
             }
         }
 
-        System.out.println(count);
-
     }
-
-
 
 }
