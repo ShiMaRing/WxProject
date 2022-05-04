@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author cjh
@@ -16,6 +18,8 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ArticleDao extends BaseMapper<Article> {
+
+
     List<Article> selectByType(@Param("type")String type);
 
     List<String> selectAllType();
