@@ -208,7 +208,13 @@ public class DataSpider {
     graphData.setMinPlace(minMap.get("marketName"));
     graphData.setMinTime(minMap.get("reportTime"));
 
-    Object max = prices.get(1);
+    Object max = null;
+    if (prices.size() > 1) {
+      max = prices.get(1);
+    } else {
+      max = min;
+    }
+
     Map<String, String> maxMap = JSON.parseObject(max.toString(), Map.class);
     graphData.setMaxPrice(maxMap.get("middlePrice"));
     graphData.setMaxPlace(maxMap.get("marketName"));
@@ -226,6 +232,6 @@ public class DataSpider {
   }
 
   public static void main(String[] args) {
-    System.out.println(new DataSpider().getProvincePrice("猪肉(白条猪)","110000","近一年"));
+    System.out.println(new DataSpider().getProvincePrice("猪肉(白条猪)", "110000", "近一年"));
   }
 }

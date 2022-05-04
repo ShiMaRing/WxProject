@@ -10,7 +10,7 @@
        (#{item.id}, #{item.name})
      </foreach>
   </insert>
-  <select id="getId" parameterType="String" resultType="Integer">
+  <select id="getId" parameterType="String" resultType="String">
     select province_id
     from province
     where name = #{name}
