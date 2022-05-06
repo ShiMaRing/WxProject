@@ -9,6 +9,7 @@
     <select id="selectByType" resultType="Article" parameterType="String">
         select * from article
         where type =#{type}
+        ORDER BY create_time DESC
     </select>
 
     <select id="selectAllType" resultType="String" >
