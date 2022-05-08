@@ -6,6 +6,12 @@
 -->
 <mapper namespace="com.xgs.dao.ArticleDao">
 
+    <update id="updateContentById">
+        update article
+        set content = #{content}
+        where id = #{id}
+    </update>
+
     <select id="selectByType" resultType="Article" parameterType="String">
         select * from article
         where type =#{type}
@@ -14,6 +20,10 @@
 
     <select id="selectAllType" resultType="String" >
         select distinct type from article
+    </select>
+
+    <select id="getAll" resultType="com.xgs.pojo.Article">
+        select * from article
     </select>
 
 </mapper>

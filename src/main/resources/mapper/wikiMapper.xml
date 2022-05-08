@@ -15,6 +15,12 @@
     </foreach>
   </insert>
 
+  <update id="updateContentByTitle">
+    update wiki
+    set content = #{content}
+    where title = #{title}
+  </update>
+
   <select id="selectNotBlankByType" resultType="Wiki" parameterType="String" >
     select title, blank, `desc`, content, img, url from wiki
     where type_id =(
@@ -26,6 +32,12 @@
   <select id="selectByTitle" parameterType="String" resultType="Wiki">
     select title, blank, `desc`, content, img, url from  wiki
     where title like concat('%',#{words},'%')
+  </select>
+
+  <select id="getAll" resultType="com.xgs.pojo.Wiki">
+    select title, blank, `desc`, content, img, url, type_id
+    from wiki
+
   </select>
 
 </mapper>

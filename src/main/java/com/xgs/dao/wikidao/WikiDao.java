@@ -1,8 +1,11 @@
 package com.xgs.dao.wikidao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xgs.pojo.Article;
 import com.xgs.pojo.Wiki;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 //写入所有的百科信息
@@ -16,5 +19,9 @@ public interface WikiDao extends BaseMapper<Wiki> {
   List<Wiki> selectNotBlankByType(String typename);
 
   List<Wiki> selectByTitle(String words);
+
+  List<Wiki> getAll();
+
+  int updateContentByTitle(@Param("title")String title, @Param("content")String content);
 
 }

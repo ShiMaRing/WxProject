@@ -1,10 +1,12 @@
 package com.xgs.service.impl;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.xgs.dao.ArticleDao;
 import com.xgs.dao.BaseDao;
 import com.xgs.pojo.Article;
 import com.xgs.spider.PolicySpider;
 import org.apache.commons.dbutils.QueryRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author cjh
@@ -21,6 +25,11 @@ import java.util.Set;
  */
 @Repository
 public class ArticleServieceImp extends BaseDao {
+
+
+
+
+
 
     @Transactional
     public void insertAllType() throws Exception{

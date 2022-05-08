@@ -23,4 +23,8 @@ public interface ArticleDao extends BaseMapper<Article> {
     List<Article> selectByType(@Param("type")String type);
 
     List<String> selectAllType();
+
+    List<Article> getAll();
+
+    int updateContentById(@Param("id")int id,@Param("content")String content);
 }
