@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--该接口提供写入操作所有的列表并提供查询所有索引的方法
+-->
+<mapper namespace="com.xgs.dao.UserDao">
+  <select id="getUserByID" parameterType="String" resultType="WechatUser">
+    select *
+    from wechat_user
+    where `open_id` = #{id}
+  </select>
+</mapper>
+
