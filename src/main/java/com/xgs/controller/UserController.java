@@ -69,7 +69,7 @@ public class UserController {
 
 
   //添加收藏
-  @RequestMapping(value = "/collectArticle", method = RequestMethod.POST)
+  @RequestMapping(value = "/collect", method = RequestMethod.POST)
   public Result collect(@RequestParam("id") String articleId, @RequestParam("uid") String uid) {
     //收藏文章
     WechatUser user = userService.getUser(uid);
@@ -90,7 +90,7 @@ public class UserController {
   }
 
   //删除收藏
-  @RequestMapping(value = "/deleteArticle", method = RequestMethod.POST)
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public Result delete(@RequestParam("id") String articleId, @RequestParam("uid") String uid) {
     //收藏文章
     WechatUser user = userService.getUser(uid);
@@ -111,7 +111,7 @@ public class UserController {
   }
 
   //展示所有收藏
-  @RequestMapping(value = "/deleteArticle", method = RequestMethod.POST)
+  @RequestMapping(value = "/show", method = RequestMethod.POST)
   public Result show(@RequestParam("uid") String uid) {
     //收藏文章
     WechatUser user = userService.getUser(uid);
