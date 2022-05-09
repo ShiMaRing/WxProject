@@ -28,12 +28,30 @@ public class WikiController {
   @Autowired
   WikiDao wikiDao;
 
-//为直接搜索出来的内容添加样式
-  String addStyleForContent(String contentPast){
+//为数据路搜索出来的内容添加样式
+  String addStyleForContentForNotBlank(String contentPast){
+    Pattern pattern1 = Pattern.compile("<img  style=\"{1}");
+    Matcher matcher1 = pattern1.matcher(contentPast);
+
+    String result1 = matcher1.replaceAll("<img  style=\" height: auto;  width:80%;");
+
+//    Pattern pattern2 = Pattern.compile("<h3>{1}");
+//    Matcher matcher2 = pattern2.matcher(result1);
+//
+//    String result2 = matcher2.replaceAll("<h3 style=\"text-indent: 30px;\n" +
+//            "    font-size: 20px;\n" +
+//            "    line-height: 30px;\n" +
+//            "    color: #EE8262;\">");
+
+    return result1;
+  }
+
+  //为网络上搜索出来的内容添加样式
+  String addStyleForContentForBlank(String contentPast){
     Pattern pattern1 = Pattern.compile("<img{1}");
     Matcher matcher1 = pattern1.matcher(contentPast);
 
-    String result1 = matcher1.replaceAll("<img  style=\" height: auto;  width:80%;   margin: 0 auto; display: block;\"");
+    String result1 = matcher1.replaceAll("<img  style=\" height: auto;  width:80%;margin: 0 auto; display: block;\"");
 
     Pattern pattern2 = Pattern.compile("<h3>{1}");
     Matcher matcher2 = pattern2.matcher(result1);
@@ -126,14 +144,17 @@ public class WikiController {
     for (Wiki wiki : wikis) {
       if (wiki.isBlank()) {
         Wiki temp=wikiSpider.parse(wiki.getUrl());
-
-        String contentAfter = addStyleForContent(temp.getContent());
+        //这是数据库里没有时 要修改
+        String contentAfter = addStyleForContentForBlank(temp.getContent());
         temp.setContent(contentAfter);
 
         temp.setTitle(wiki.getTitle());
         temp.setUrl(wiki.getUrl());
         result.add(temp);
       }else {
+        //这是数据库有时 也要修改
+        String contentAfter = addStyleForContentForNotBlank(wiki.getContent());
+        wiki.setContent(contentAfter);
         result.add(wiki);
       }
     }
