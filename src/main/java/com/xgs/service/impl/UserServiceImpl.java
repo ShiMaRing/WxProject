@@ -27,8 +27,8 @@ public class UserServiceImpl {
   private static final String PARAM = "authorization_code";
   @Autowired
   UserDao userDao;
-  String appId = "wx9c907a46ab4fe94d";
-  String appSecret = "e9fa74de2e4751699fb678318f5d28ca";
+  String appId = "*****************";
+  String appSecret = "******************";
 
   //使用map封装响应数据
   //  "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code"
