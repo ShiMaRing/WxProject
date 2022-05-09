@@ -16,5 +16,23 @@
     values (#{nickname}, #{avatarUrl}, #{gender}, #{country}, #{province}, #{city}, #{openId},
             #{createdAt}, #{updatedAt})
   </insert>
+  <insert id="collect">
+    insert into user_article (user_id, article_id)
+    values (#{userId}, #{articleId})
+  </insert>
+  <delete id="delete">
+    delete
+    from user_article
+    where user_id = #{userId}
+      and article_id = #{articleId}
+  </delete>
+  <select id="show" resultType="Article">
+    select *
+    from article
+    where id = (select article_id
+                from user_article
+                where user_id = #{userId}
+    )
+  </select>
 </mapper>
 
