@@ -9,7 +9,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://localhost:3306/wxp?useUnicode=true&characterEncodeing=UTF-8&severTimezone=Asia/Shanghai
+      url: jdbc:mysql://101.43.161.75:3306/wxp?useUnicode=true&characterEncodeing=UTF-8&severTimezone=Asia/Shanghai
       driver-class-name: com.mysql.jdbc.Driver
       username: wxp
       password: 123456
