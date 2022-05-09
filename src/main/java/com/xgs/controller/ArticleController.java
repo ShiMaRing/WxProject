@@ -39,6 +39,27 @@ public class ArticleController {
     @Autowired
     ArticleDao articleDao;
 
+    //为直接搜索出来的内容添加样式
+    String addStyleForContent(String contentPast){
+        Pattern pattern1 = Pattern.compile("<img  style=\"{1}");
+        Matcher matcher1 = pattern1.matcher(contentPast);
+
+        String result1 = matcher1.replaceAll("<img  style=\" height: auto;  width:80%;");
+
+//        Pattern pattern2 = Pattern.compile("<h3>{1}");
+//        Matcher matcher2 = pattern2.matcher(result1);
+//
+//        String result2 = matcher2.replaceAll("<h3 style=\"text-indent: 30px;\n" +
+//                "    font-size: 20px;\n" +
+//                "    line-height: 30px;\n" +
+//                "    color: #EE8262;\">");
+
+        return result1;
+    }
+
+
+
+
     @RequestMapping(value = "/changeAllContent",method = RequestMethod.GET)
     public int changeAllContent(){
         int num=0;
@@ -92,6 +113,13 @@ public class ArticleController {
         }
         PageHelper.startPage(page,size);
         List<Article> articles = articleDao.selectByType(yinwen);
+
+        //修改每篇文章的content
+        for(Article article:articles){
+            String contentAfter = addStyleForContent(article.getContent());
+            article.setContent(contentAfter);
+        }
+
         return articles;
     }
 }

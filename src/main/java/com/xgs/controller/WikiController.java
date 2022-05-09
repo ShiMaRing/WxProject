@@ -33,7 +33,7 @@ public class WikiController {
     Pattern pattern1 = Pattern.compile("<img{1}");
     Matcher matcher1 = pattern1.matcher(contentPast);
 
-    String result1 = matcher1.replaceAll("<img  style=\"    margin: 0 auto; display: block;\"");
+    String result1 = matcher1.replaceAll("<img  style=\" height: auto;  width:80%;   margin: 0 auto; display: block;\"");
 
     Pattern pattern2 = Pattern.compile("<h3>{1}");
     Matcher matcher2 = pattern2.matcher(result1);
