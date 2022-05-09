@@ -23,11 +23,7 @@ public class WechatUser {
 
   private String city;
 
-  private String mobile;
-
   private String openId;
-
-  private String unionId;
 
   private String createdAt;
 

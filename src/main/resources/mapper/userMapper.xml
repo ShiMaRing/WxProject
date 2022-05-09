@@ -10,5 +10,11 @@
     from wechat_user
     where `open_id` = #{id}
   </select>
+  <insert id="insertUser" parameterType="WechatUser">
+    insert into wechat_user (nickname, avatar_url, gender, country, province, city, open_id,
+                             created_at, updated_at)
+    values (#{nickname}, #{avatarUrl}, #{gender}, #{country}, #{province}, #{city}, #{openId},
+            #{createdAt}, #{updatedAt})
+  </insert>
 </mapper>
 

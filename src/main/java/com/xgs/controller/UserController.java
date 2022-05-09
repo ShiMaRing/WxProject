@@ -41,6 +41,7 @@ public class UserController {
       return null;
     }
     String openid = info.get("openid");
+    System.out.println(openid);
     WechatUser wechatUser = userService.parseUser(wechatLoginRequest, openid);
     String uUid = userService.getUUid(openid);
     wechatUser.setToken(uUid);
