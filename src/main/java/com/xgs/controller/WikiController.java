@@ -132,6 +132,8 @@ public class WikiController {
     return wikiDao.selectNotBlankByType(typeName);
   }
 
+
+
   /**
    * 该方法用来获取用户搜索关键字得到的wiki
    */

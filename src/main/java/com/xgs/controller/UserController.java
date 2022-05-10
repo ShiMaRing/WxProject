@@ -51,7 +51,7 @@ public class UserController {
   }
 
 
-  @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
+  @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
   public Result getUser(@RequestParam(value = "uid") String uid) {
     WechatUser user = userService.getUser(uid);
     Result result = new Result();
@@ -69,9 +69,12 @@ public class UserController {
 
 
   //添加收藏
-  @RequestMapping(value = "/collect", method = RequestMethod.POST)
-  public Result collect(@RequestParam("id") String articleId, @RequestParam("uid") String uid) {
+  @RequestMapping(value = "/collect", method = RequestMethod.GET)
+  public Result collect(@RequestParam("id") String id, @RequestParam("uid") String uid
+  ) {
     //收藏文章
+    System.out.println(id);
+    System.out.println(uid);
     WechatUser user = userService.getUser(uid);
     Result result = new Result();
     if (user == null) {
@@ -81,7 +84,7 @@ public class UserController {
       return result;
     }
     int userId = user.getId();
-    int artId = Integer.parseInt(articleId);
+    int artId = Integer.valueOf(id);
     userDao.collect(userId, artId);
     result.setDesc("收藏成功");
     result.setFlag(true);
@@ -90,7 +93,7 @@ public class UserController {
   }
 
   //删除收藏
-  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  @RequestMapping(value = "/delete", method = RequestMethod.GET)
   public Result delete(@RequestParam("id") String articleId, @RequestParam("uid") String uid) {
     //收藏文章
     WechatUser user = userService.getUser(uid);
@@ -110,8 +113,34 @@ public class UserController {
     return result;
   }
 
+  @RequestMapping(value = "/isCollected", method = RequestMethod.GET)
+  public Result isCollected(@RequestParam("id") String articleId, @RequestParam("uid") String uid) {
+    //收藏文章
+    WechatUser user = userService.getUser(uid);
+    Result result = new Result();
+    if (user == null) {
+      result.setDesc("用户未登陆");
+      result.setStatusCode(200);
+      result.setFlag(false);
+      return result;
+    }
+    int userId = user.getId();
+    int artId = Integer.parseInt(articleId);
+    int collected = userDao.isCollected(userId, artId);
+    if (collected != 0) {
+      result.setDesc("已收藏");
+      result.setStatusCode(200);
+      result.setFlag(true);
+    } else {
+      result.setDesc("未收藏");
+      result.setStatusCode(200);
+      result.setFlag(false);
+    }
+    return result;
+  }
+
   //展示所有收藏
-  @RequestMapping(value = "/show", method = RequestMethod.POST)
+  @RequestMapping(value = "/show", method = RequestMethod.GET)
   public Result show(@RequestParam("uid") String uid) {
     //收藏文章
     WechatUser user = userService.getUser(uid);
@@ -129,6 +158,7 @@ public class UserController {
     result.setStatusCode(200);
     return result;
   }
+
 
 }
 

@@ -23,4 +23,6 @@ public interface UserDao extends BaseMapper<WechatUser> {
 
   public List<Article> show(int userId);
 
+  public int isCollected(@Param("userId") int userId, @Param("articleId") int articleId);
+
 }
